@@ -1,0 +1,36 @@
+---
+version: '2'
+services:
+  web:
+    image: xmppxsf/xmpp.org
+    ports:
+      - "127.0.0.1:7001:80"
+  xeps:
+    #image: xmppxsf/xeps
+    image: registry.gitlab.com/xsf/xeps/packed:main-latest
+    ports:
+      - "127.0.0.1:7002:80"
+  attic:
+    #image: xmppxsf/xep-attic
+    image: registry.gitlab.com/xsf/xep-attic/packed:main-latest
+    ports:
+      - "127.0.0.1:7004:80"
+  wiki:
+    image: xmppxsf/mediawiki
+    ports:
+      - "127.0.0.1:7003:80"
+    links:
+      - wiki_db
+    env_file:
+      - ./wiki_db.env
+    volumes:
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php:ro
+      - /docker/wiki.xmpp.org/data/mediawiki/data/images:/var/www/html/images
+      #- /docker/wiki.xmpp.org/data/mediawiki/data/extensions:/var/www/html/extensions
+  wiki_db:
+    image: postgres:9.6
+    #image: postgres:11
+    env_file:
+      - ./wiki_db.env
+    volumes:
+      - /docker/wiki.xmpp.org/data/postgres/var_lib_postgrestql_data:/var/lib/postgresql/data
