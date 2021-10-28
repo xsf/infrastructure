@@ -35,3 +35,8 @@ services:
       - ./wiki_db.env
     volumes:
       - /docker/wiki.xmpp.org/data/postgres/var_lib_postgrestql_data:/var/lib/postgresql/data
+  registrar:
+    image: xmppxsf/registrar
+    build: registrar
+    ports:
+    - "127.0.0.1:7005:80"
