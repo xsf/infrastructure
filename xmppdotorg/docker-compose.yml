@@ -2,6 +2,7 @@
 version: '2'
 services:
   web:
+    build: xmpp.org
     image: xmppxsf/xmpp.org
     ports:
       - "127.0.0.1:7001:80"
