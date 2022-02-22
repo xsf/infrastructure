@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  providers:
+    image: xsf/xmpp-providers
+    build: .
+    volumes:
+      - /var/www/vhosts/data.xmpp.net/providers/v1:/var/www/public
