@@ -8,5 +8,5 @@ for list in A B C D As Bs Cs Ds; do
 	curl -L -o "/var/www/public/providers-${list}.json" "$FETCH_URL"
 done
 
-# Sleep ~24 hours
-exec /bin/sleep 86400
+# Sleep 1 hour before refreshing
+exec /bin/sleep 3600
