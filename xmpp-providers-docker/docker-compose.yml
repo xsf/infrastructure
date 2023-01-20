@@ -6,3 +6,9 @@ services:
     build: .
     volumes:
       - /var/www/vhosts/data.xmpp.net/providers/v1:/var/www/public
+    restart: always
+  website:
+    build: xmpp-providers-website
+    ports:
+      - 8090:80
+    restart: always
