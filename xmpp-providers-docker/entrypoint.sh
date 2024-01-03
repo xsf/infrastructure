@@ -20,7 +20,7 @@ while true; do
 
     # Fetch the original providers file.
     echo "## Fetching v${version} files from ${source_root} to ${destination_root}"
-    curl -L -o "${destination_root}/providers-${version}.json" "${source_root}/providers.json?job=providers-file"
+    curl -L -o "${destination_root}/providers.json" "${source_root}/providers.json?job=providers-file"
 
     # Fetch the filtered provider lists.
     for list in A B C D As Bs Cs Ds; do
