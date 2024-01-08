@@ -7,7 +7,7 @@ ADD entrypoint.sh /entrypoint.sh
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        tini curl ca-certificates \
+        tini curl ca-certificates zip unzip \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/*
 
