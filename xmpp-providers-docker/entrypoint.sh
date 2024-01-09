@@ -29,22 +29,27 @@ while true; do
         done
     fi
 
-    # Fetch filtered provider lists.
-    curl -L -o "${destination_root}/results.zip" "${source_root}/download/?job=filtered-provider-lists"
-    unzip -o "${destination_root}/results.zip" -d "${destination_root}"
-    rm "${destination_root}/results.zip"
+    # Fetch and extract provider lists and categorization results.
+    curl -L -o "${destination_root}/lists-and-results.zip" "${source_root}/download/?job=filtered-provider-lists"
+    unzip -o "${destination_root}/lists-and-results.zip" -d "${destination_root}"
+    rm "${destination_root}/lists-and-results.zip"
 
-    # Zip individual provider results.
+    # Zip all provider lists.
+    zip --junk-paths --filesync --recurse-paths "${destination_root}/providers.zip" "${destination_root}" --include "*providers-*.json"
+
+    # Zip all categorization results.
     zip --junk-paths --filesync --recurse-paths "${destination_root}/results.zip" "${destination_root}/results"
 
-    # Fetch badges archive.
+    # Fetch and extract badges.
     curl -L -o "${destination_root}/badges.zip" "${source_root}/download/?job=badges"
     unzip -o "${destination_root}/badges.zip" -d "${destination_root}"
     rm "${destination_root}/badges.zip"
 
-    # Zip count badges and individual provider badges to provide a separate archive for both.
+    # Zip all provider badges.
     zip --junk-paths --filesync --recurse-paths "${destination_root}/provider-badges.zip" "${destination_root}/badges"
-    zip --junk-paths --filesync "${destination_root}/count-badges.zip" "${destination_root}/badge-count-A.svg" "${destination_root}/badge-count-B.svg" "${destination_root}/badge-count-C.svg" "${destination_root}/badge-count-D.svg"
+
+    # Zip all count badges.
+    zip --junk-paths --filesync --recurse-paths "${destination_root}/count-badges.zip" "${destination_root}" --include "*badge-count-*.svg"
 
     version=$((${version} + 1))
 done
