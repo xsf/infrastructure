@@ -49,7 +49,11 @@ while true; do
     zip --junk-paths --filesync --recurse-paths "${destination_root}/provider-badges.zip" "${destination_root}/badges"
 
     # Zip all count badges.
-    zip --junk-paths --filesync --recurse-paths "${destination_root}/count-badges.zip" "${destination_root}" --include "*count-badge-*.svg"
+    if [ "${version}" -eq "1" ]; then
+        zip --junk-paths --filesync --recurse-paths "${destination_root}/count-badges.zip" "${destination_root}" --include "*badge-count-*.svg"
+    else
+        zip --junk-paths --filesync --recurse-paths "${destination_root}/count-badges.zip" "${destination_root}" --include "*count-badge-*.svg"
+    fi
 
     version=$((${version} + 1))
 done
