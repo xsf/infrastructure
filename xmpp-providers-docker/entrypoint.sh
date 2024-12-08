@@ -6,6 +6,22 @@ base_dir="/var/www/public"
 
 version=1
 
+# Determine the latest version.
+while true; do
+    branch_url="https://invent.kde.org/melvo/xmpp-providers/-/tree/stable/v${version}"
+
+    # Check whether there is a branch for the desried version.
+    http_code=$(curl -o /dev/null -w "%{http_code}" "${branch_url}")
+
+    # Quit the loop as soon as there is no branch for the desired version anymore.
+    [ "${http_code}" -ne 404 ] || break
+
+    version=$((${version} + 1))
+done
+
+version=$((${version} - 1))
+
+# Retrieve all data from the latest version to the oldest one.
 while true; do
     destination_root="${base_dir}/v${version}"
     source_root="https://invent.kde.org/melvo/xmpp-providers/-/jobs/artifacts/stable/v${version}"
@@ -55,7 +71,7 @@ while true; do
         zip --junk-paths --filesync --recurse-paths "${destination_root}/count-badges.zip" "${destination_root}" --include "*count-badge-*.svg"
     fi
 
-    version=$((${version} + 1))
+    version=$((${version} - 1))
 done
 
 # Wait 1 hour before fetching the latest files again.
