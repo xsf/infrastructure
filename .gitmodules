@@ -1,0 +1,3 @@
+[submodule "ansible/roles/pdns"]
+	path = ansible/roles/pdns
+	url = git@codeberg.org:jssfr/ansible-pdns
