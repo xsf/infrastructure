@@ -1,0 +1,31 @@
+# NOTE: We do not distinguish who is allowed to AXFR which zones. We consider
+# data in DNS to be public anyway. Not allowing everyone to AXFR zones is
+# merely protection against a cheap DoS vector.
+pdns_axfr_ips:
+  # NOTE: *.sotecware.net are the intermediate nameservers set up during the
+  # hard drive crash of September 2026.
+  # They can be removed once our previous NSes have been added here and set up
+  # to correctly serve the zone.
+  # ns-2025-a.sotecware.net
+- '148.251.196.92'
+- '2a01:4f8:210:105d::1:6'
+  # ns-2025-b.sotecware.net
+- '217.196.147.170'
+- '2a02:16a8:dc4:910::24f3'
+
+# We don't have prometheus-node-exporter installed.
+pdns_backup_node_exporter_integration: false
+
+# We, unfortunately, cannot bind to 0.0.0.0 because of systemd-resolved.
+pdns_local_ipv4:
+- "{{ ansible_facts.default_ipv4.address }}"
+pdns_local_ipv6:
+- "{{ ansible_facts.default_ipv6.address }}"
+
+# NOTE: This only declares the zones. To edit zone contents, use
+# `sudo -u pdns pdnsutil edit-zone $zonename` on the server.
+pdns_zones_v2:
+- name: xmpp.org
+- name: xmpp.net
+- name: xmpp.com
+- name: jabber.org
